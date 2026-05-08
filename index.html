@@ -3,74 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoShop - Catálogo Interactivo</title>
+    <title>EcoShop - Dashboard de Gestión de Productos</title>
+    
+    <!-- Enlace al archivo de estilos (Para tu compañero UX/UI) -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- FontAwesome para darle iconos bonitos a la interfaz (Opcional pero recomendado) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="light-mode"> <!-- Clase base para que UX/UI controle el tema claro/oscuro -->
 
+    <!-- ================= CABECERA ================= -->
     <header class="app-header">
         <div class="logo-container">
-            <h1>🌱 EcoShop Dashboard</h1>
+            <i class="fa-solid fa-leaf logo-icon"></i>
+            <h1 class="logo-text">EcoShop Dashboard</h1>
         </div>
-        <button id="btn-theme-toggle" class="btn-theme">Modo Oscuro</button>
+        
+        <!-- ID para JS (escuchar clic) y Clase para CSS (estilos) -->
+        <button id="btn-theme-toggle" class="btn-theme" aria-label="Cambiar a Modo Oscuro">
+            <i class="fa-solid fa-moon"></i> Modo Oscuro
+        </button>
     </header>
 
+    <!-- ================= CONTENEDOR PRINCIPAL ================= -->
     <main class="dashboard-container">
 
+        <!-- PANEL LATERAL (CONTROLES Y ESTADÍSTICAS) -->
         <aside class="sidebar">
             
+            <!-- Sección 1: Buscador -->
             <section class="search-section">
-                <h2>Buscador</h2>
-                <input type="text" id="input-busqueda" class="search-input" placeholder="Buscar producto por nombre...">
+                <h2 class="section-title"><i class="fa-solid fa-magnifying-glass"></i> Buscar</h2>
+                <!-- ID para que JS capture el texto en vivo mientras el usuario escribe -->
+                <input type="text" id="input-busqueda" class="search-input" placeholder="Ej. Lámpara, Mochila...">
             </section>
 
+            <!-- Sección 2: Filtros de Categorías -->
             <section class="filters-section">
-                <h2>Categorías</h2>
+                <h2 class="section-title"><i class="fa-solid fa-filter"></i> Categorías</h2>
+                
+                <!-- ID 'contenedor-filtros' para que el de JS capture los clics fácilmente -->
                 <div id="contenedor-filtros" class="filter-buttons">
+                    <!-- El atributo 'data-categoria' es vital para filtrar el arreglo en JS -->
                     <button class="btn-filtro active" data-categoria="todas">Todas</button>
                     <button class="btn-filtro" data-categoria="hogar">Hogar</button>
-                    <button class="btn-filtro" data-categoria="tecnologia">Tecnología</button>
+                    <button class="btn-filtro" data-categoria="tecnología">Tecnología</button>
                     <button class="btn-filtro" data-categoria="deportes">Deportes</button>
                 </div>
             </section>
 
+            <!-- Sección 3: Panel de Estadísticas -->
             <section class="stats-section">
-                <h2>Estadísticas</h2>
+                <h2 class="section-title"><i class="fa-solid fa-chart-pie"></i> Estadísticas</h2>
+                
                 <div class="stat-card">
-                    <p>Total de productos:</p>
-                    <strong id="stat-total-items">0</strong>
+                    <p class="stat-label">Total Productos:</p>
+                    <!-- ID para que JS inserte la longitud del arreglo -->
+                    <strong id="stat-total-items" class="stat-value">0</strong>
                 </div>
+                
                 <div class="stat-card">
-                    <p>Valor del Inventario:</p>
-                    <strong id="stat-valor-total">$0.00</strong>
+                    <p class="stat-label">Valor del Inventario:</p>
+                    <!-- ID para que JS inserte la suma total del dinero -->
+                    <strong id="stat-valor-total" class="stat-value">$0.00</strong>
                 </div>
             </section>
 
         </aside>
 
+        <!-- ÁREA CENTRAL (CATÁLOGO DE PRODUCTOS) -->
         <section class="catalog-section">
-            
+            <!-- ID principal donde el desarrollador JS inyectará las tarjetas generadas -->
             <div id="grilla-productos" class="grid-layout">
-                </div>
+                <!-- Las tarjetas se insertarán aquí dinámicamente -->
+            </div>
         </section>
 
     </main>
 
-    <div id="panel-detalle" class="modal-hidden">
+    <!-- ================= MODAL / PANEL DE DETALLE (EFECTO ZOOM) ================= -->
+    <!-- Este panel inicia con clase 'hidden' para estar oculto -->
+    <div id="panel-detalle" class="modal-overlay hidden">
         <div class="modal-content">
-            <button id="btn-cerrar-modal" class="btn-close">X</button>
+            
+            <button id="btn-cerrar-modal" class="btn-close" aria-label="Cerrar modal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
             <div class="modal-body">
-                <img id="detalle-imagen" src="" alt="Imagen detalle">
-                <div class="modal-text">
-                    <h2 id="detalle-nombre">Título Producto</h2>
-                    <p id="detalle-categoria" class="badge">Categoría</p>
-                    <p id="detalle-precio" class="price-large"></p>
-                    <p id="detalle-stock"></p>
+                <div class="modal-image-container">
+                    <img id="detalle-imagen" src="" alt="Imagen del producto" class="modal-img">
+                </div>
+                
+                <div class="modal-info">
+                    <h2 id="detalle-nombre" class="modal-title">Título</h2>
+                    <span id="detalle-categoria" class="badge badge-modal">Categoría</span>
+                    <p id="detalle-precio" class="modal-price">$0.00</p>
+                    <p id="detalle-stock-texto" class="modal-stock">Stock disponible: <strong id="detalle-stock">0</strong></p>
                 </div>
             </div>
+            
         </div>
     </div>
 
+    <!-- ================= PLANTILLA DE TARJETA (GUÍA PARA JS Y CSS) ================= -->
+    <!-- La etiqueta template es invisible. El Lead Dev la usará para clonar la estructura en JS -->
+    <template id="template-tarjeta">
+        <article class="product-card">
+            <div class="card-image-wrapper">
+                <img src="" alt="" class="product-img">
+                <span class="badge product-category">Categoría</span>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">Nombre</h3>
+                <p class="product-price">$0.00</p>
+                <p class="product-stock-text">Stock: <span class="product-stock">0</span></p>
+                
+                <!-- El atributo 'data-id' servirá para que JS sepa a qué producto restar stock -->
+                <button class="btn-comprar" data-id="">
+                    <i class="fa-solid fa-cart-shopping"></i> Comprar
+                </button>
+            </div>
+        </article>
+    </template>
+
+    <!-- Enlace al archivo de lógica (Para tu compañero Lead) -->
     <script src="app.js"></script>
 </body>
 </html>
