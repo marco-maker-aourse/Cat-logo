@@ -1,331 +1,129 @@
-const STORAGE_KEY = "ecoshop_inventario";
-const THEME_KEY = "ecoshop_theme";
-
-const inventarioBase = [
-  {
-    id: 1,
-    nombre: "Auriculares Bluetooth Pro",
-    precio: 159.9,
-    categoria: "tecnologia",
-    stock: 8,
-    imagen: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80",
-    descripcion: "Auriculares inalámbricos con sonido envolvente y diseño premium.",
-  },
-  {
-    id: 2,
-    nombre: "Smartwatch Fit",
-    precio: 229.9,
-    categoria: "tecnologia",
-    stock: 6,
-    imagen: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80",
-    descripcion: "Reloj inteligente para controlar actividad física y notificaciones.",
-  },
-  {
-    id: 3,
-    nombre: "Teclado Mecánico RGB",
-    precio: 189.9,
-    categoria: "tecnologia",
-    stock: 7,
-    imagen: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&w=900&q=80",
-    descripcion: "Teclado mecánico con iluminación RGB y switches de alto rendimiento.",
-  },
-  {
-    id: 4,
-    nombre: "Lámpara LED Moderna",
-    precio: 79.9,
-    categoria: "hogar",
-    stock: 10,
-    imagen: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=900&q=80",
-    descripcion: "Lámpara minimalista de bajo consumo para escritorio o habitación.",
-  },
-  {
-    id: 5,
-    nombre: "Silla Ergonómica",
-    precio: 399.9,
-    categoria: "hogar",
-    stock: 4,
-    imagen: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=900&q=80",
-    descripcion: "Silla cómoda para trabajo, estudio o setup profesional.",
-  },
-  {
-    id: 6,
-    nombre: "Organizador de Escritorio",
-    precio: 39.9,
-    categoria: "hogar",
-    stock: 12,
-    imagen: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
-    descripcion: "Organizador elegante para útiles, documentos y accesorios.",
-  },
-  {
-    id: 7,
-    nombre: "Zapatillas Running",
-    precio: 169.9,
-    categoria: "deportes",
-    stock: 9,
-    imagen: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80",
-    descripcion: "Zapatillas ligeras para correr con buena amortiguación.",
-  },
-  {
-    id: 8,
-    nombre: "Mat de Yoga",
-    precio: 69.9,
-    categoria: "deportes",
-    stock: 13,
-    imagen: "https://images.unsplash.com/photo-1592432678016-e910b452f9a2?auto=format&fit=crop&w=900&q=80",
-    descripcion: "Mat antideslizante ideal para yoga, pilates y entrenamiento.",
-  },
-  {
-    id: 9,
-    nombre: "Bicicleta Urbana",
-    precio: 1299.9,
-    categoria: "deportes",
-    stock: 3,
-    imagen: "https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?auto=format&fit=crop&w=900&q=80",
-    descripcion: "Bicicleta ligera para ciudad y recorridos diarios.",
-  },
-  {
-    id: 10,
-    nombre: "Mochila Antirrobo",
-    precio: 119.9,
-    categoria: "hogar",
-    stock: 6,
-    imagen: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=80",
-    descripcion: "Mochila moderna con compartimentos seguros para laptop.",
-  },
-  {
-    id: 11,
-    nombre: "Mouse Inalámbrico",
-    precio: 49.9,
-    categoria: "tecnologia",
-    stock: 11,
-    imagen: "https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=900&q=80",
-    descripcion: "Mouse ergonómico inalámbrico con alta precisión.",
-  },
-  {
-    id: 12,
-    nombre: "Botella Térmica",
-    precio: 45.9,
-    categoria: "deportes",
-    stock: 15,
-    imagen: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=900&q=80",
-    descripcion: "Botella reutilizable de acero inoxidable para bebidas frías o calientes.",
-  },
+// Catálogo extendido con imágenes HD y precios en Soles
+const stockInicial = [
+    { id: 1, nombre: "Mochila Solar Pro", precio: 245.00, categoria: "hogar", stock: 10, imagen: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600" },
+    { id: 2, nombre: "Laptop Bamboo V2", precio: 3800.00, categoria: "tecnología", stock: 5, imagen: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600" },
+    { id: 3, nombre: "Kit Pesas Bio", precio: 189.99, categoria: "deportes", stock: 8, imagen: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600" },
+    { id: 4, nombre: "Lámpara Solar LED", precio: 85.50, categoria: "hogar", stock: 15, imagen: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600" },
+    { id: 5, nombre: "Teclado Reciclado", precio: 155.00, categoria: "tecnología", stock: 12, imagen: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600" },
+    { id: 6, nombre: "Yoga Mat Natural", precio: 95.00, categoria: "deportes", stock: 2, imagen: "https://images.unsplash.com/photo-1592432676556-28203042c161?w=600" },
+    { id: 7, nombre: "Botella Acero Inox", precio: 45.00, categoria: "hogar", stock: 20, imagen: "https://images.unsplash.com/photo-1602143399827-7211bb1ad050?w=600" },
+    { id: 8, nombre: "Audífonos Eco-Buds", precio: 320.00, categoria: "tecnología", stock: 6, imagen: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600" },
+    { id: 9, nombre: "Set Cubiertos Bamboo", precio: 25.00, categoria: "hogar", stock: 30, imagen: "https://images.unsplash.com/photo-1584346133934-a3afd2a33c4c?w=600" },
+    { id: 10, nombre: "Cámara Solar 4K", precio: 450.00, categoria: "tecnología", stock: 3, imagen: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600" },
+    { id: 11, nombre: "Balón Basket Bio", precio: 120.00, categoria: "deportes", stock: 0, imagen: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600" },
+    { id: 12, nombre: "Mesa Terraza Roble", precio: 850.00, categoria: "hogar", stock: 4, imagen: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=600" },
+    { id: 13, nombre: "Smartwatch Green", precio: 299.00, categoria: "tecnología", stock: 7, imagen: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600" },
+    { id: 14, nombre: "Zapatillas Bio-Rec", precio: 310.00, categoria: "deportes", stock: 9, imagen: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600" },
+    { id: 15, nombre: "Silla Ergonomía Eco", precio: 540.00, categoria: "hogar", stock: 6, imagen: "https://images.unsplash.com/photo-1592078615290-033ee584e267?w=600" },
+    { id: 16, nombre: "Altavoz Bluetooth Madera", precio: 175.00, categoria: "tecnología", stock: 11, imagen: "https://images.unsplash.com/photo-1589003020612-61a010255e14?w=600" }
 ];
 
-let inventario = JSON.parse(localStorage.getItem(STORAGE_KEY)) || inventarioBase;
-let categoriaActual = "todas";
-let busquedaActual = "";
-let productoSeleccionadoId = null;
+let inventario = JSON.parse(localStorage.getItem('ecoShop_v3')) || stockInicial;
 
-const grid = document.getElementById("grilla-productos");
-const inputBusqueda = document.getElementById("input-busqueda");
-const botonesFiltro = document.querySelectorAll(".btn-filtro");
-const statTotal = document.getElementById("stat-total-items");
-const statValor = document.getElementById("stat-valor-total");
-const modal = document.getElementById("panel-detalle");
-const btnCerrarModal = document.getElementById("btn-cerrar-modal");
-const btnTheme = document.getElementById("btn-theme-toggle");
+const grilla = document.getElementById('grilla-productos');
+const template = document.getElementById('template-tarjeta').content;
+const inputBusqueda = document.getElementById('input-busqueda');
+const btnFiltros = document.querySelectorAll('.btn-filter');
+const modalBS = new bootstrap.Modal(document.getElementById('panel-detalle'));
+let categoriaActual = 'todas';
 
-const detalleImagen = document.getElementById("detalle-imagen");
-const detalleNombre = document.getElementById("detalle-nombre");
-const detalleCategoria = document.getElementById("detalle-categoria");
-const detallePrecio = document.getElementById("detalle-precio");
-const detalleStock = document.getElementById("detalle-stock");
+// --- FUNCIONES CORE ---
 
-function guardarInventario() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(inventario));
-}
+const actualizarIU = () => {
+    grilla.innerHTML = '';
+    const query = inputBusqueda.value.toLowerCase();
 
-function obtenerProductosFiltrados() {
-  return inventario.filter((producto) => {
-    const coincideCategoria =
-      categoriaActual === "todas" || producto.categoria === categoriaActual;
-
-    const coincideBusqueda = producto.nombre
-      .toLowerCase()
-      .includes(busquedaActual.toLowerCase());
-
-    return coincideCategoria && coincideBusqueda;
-  });
-}
-
-function renderProductos() {
-  const productos = obtenerProductosFiltrados();
-  grid.innerHTML = "";
-
-  if (productos.length === 0) {
-    grid.innerHTML = `
-      <div class="empty-state">
-        <h3>No se encontraron productos</h3>
-        <p>Prueba con otra categoría o búsqueda.</p>
-      </div>
-    `;
-    return;
-  }
-
-  productos.forEach((producto, index) => {
-    const card = document.createElement("article");
-    card.className = `product-card ${producto.stock === 0 ? "agotado" : ""}`;
-    card.style.animationDelay = `${index * 70}ms`;
-
-    card.innerHTML = `
-      <div class="card-img">
-        <img src="${producto.imagen}" alt="${producto.nombre}">
-        ${producto.stock === 0 ? `<span class="sold-out">Agotado</span>` : ""}
-      </div>
-
-      <div class="card-info">
-        <span class="category">${producto.categoria}</span>
-        <h3>${producto.nombre}</h3>
-        <p>${producto.descripcion}</p>
-
-        <div class="card-meta">
-          <strong>S/ ${producto.precio.toFixed(2)}</strong>
-          <span>Stock: ${producto.stock}</span>
-        </div>
-
-        <div class="card-actions">
-          <button class="btn-detail" data-id="${producto.id}">
-            Ver detalle
-          </button>
-
-          <button class="btn-buy" data-id="${producto.id}" ${
-            producto.stock === 0 ? "disabled" : ""
-          }>
-            Comprar
-          </button>
-        </div>
-      </div>
-    `;
-
-    grid.appendChild(card);
-  });
-
-  document.querySelectorAll(".btn-buy").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      comprarProducto(Number(btn.dataset.id));
+    const filtrados = inventario.filter(p => {
+        const matchesName = p.nombre.toLowerCase().includes(query);
+        const matchesCat = categoriaActual === 'todas' || p.categoria === categoriaActual;
+        return matchesName && matchesCat;
     });
-  });
 
-  document.querySelectorAll(".btn-detail").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      mostrarDetalle(Number(btn.dataset.id));
+    filtrados.forEach(p => {
+        const clone = template.cloneNode(true);
+        const card = clone.querySelector('.product-card');
+        
+        clone.querySelector('.product-img').src = p.imagen;
+        clone.querySelector('.product-title').textContent = p.nombre;
+        clone.querySelector('.category-badge').textContent = p.categoria;
+        clone.querySelector('.product-price').textContent = `S/ ${p.precio.toFixed(2)}`;
+        clone.querySelector('.product-stock').textContent = p.stock;
+        
+        const btn = clone.querySelector('.btn-comprar');
+        btn.dataset.id = p.id;
+
+        if (p.stock <= 0) {
+            card.classList.add('agotado');
+            clone.querySelector('.out-of-stock-mask').classList.remove('hidden');
+            btn.disabled = true;
+            btn.textContent = "Agotado";
+        }
+
+        card.addEventListener('click', () => abrirDetalle(p, card));
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            ejecutarCompra(p.id);
+        });
+
+        grilla.appendChild(clone);
     });
-  });
+    refrescarStats();
+};
 
-  document.querySelectorAll(".product-card").forEach((card) => {
-    card.addEventListener("click", () => {
-      document
-        .querySelectorAll(".product-card")
-        .forEach((c) => c.classList.remove("selected"));
-
-      card.classList.add("selected");
-    });
-  });
-}
-
-function comprarProducto(id) {
-  inventario = inventario.map((producto) => {
-    if (producto.id !== id) return producto;
-
-    return {
-      ...producto,
-      stock: producto.stock > 0 ? producto.stock - 1 : 0,
-    };
-  });
-
-  guardarInventario();
-  renderApp();
-}
-
-function mostrarDetalle(id) {
-  const producto = inventario.find((item) => item.id === id);
-  if (!producto) return;
-
-  productoSeleccionadoId = id;
-
-  detalleImagen.src = producto.imagen;
-  detalleNombre.textContent = producto.nombre;
-  detalleCategoria.textContent = producto.categoria;
-  detallePrecio.textContent = `S/ ${producto.precio.toFixed(2)}`;
-  detalleStock.textContent =
-    producto.stock > 0 ? `Stock disponible: ${producto.stock}` : "Producto agotado";
-
-  modal.classList.remove("modal-hidden");
-  modal.classList.add("modal-visible");
-}
-
-function cerrarModal() {
-  modal.classList.add("modal-hidden");
-  modal.classList.remove("modal-visible");
-}
-
-function actualizarEstadisticas() {
-  const totalProductos = inventario.length;
-
-  const valorTotal = inventario.reduce(
-    (total, producto) => total + producto.precio * producto.stock,
-    0
-  );
-
-  statTotal.textContent = totalProductos;
-  statValor.textContent = `S/ ${valorTotal.toFixed(2)}`;
-}
-
-function configurarEventos() {
-  inputBusqueda.addEventListener("input", (e) => {
-    busquedaActual = e.target.value.trim();
-    renderProductos();
-  });
-
-  botonesFiltro.forEach((boton) => {
-    boton.addEventListener("click", () => {
-      botonesFiltro.forEach((btn) => btn.classList.remove("active"));
-      boton.classList.add("active");
-
-      categoriaActual = boton.dataset.categoria;
-      renderProductos();
-    });
-  });
-
-  btnCerrarModal.addEventListener("click", cerrarModal);
-
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) cerrarModal();
-  });
-
-  btnTheme.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-
-    const isDark = document.body.classList.contains("dark-mode");
-    localStorage.setItem(THEME_KEY, isDark ? "dark" : "light");
-
-    btnTheme.textContent = isDark ? "Modo Claro" : "Modo Oscuro";
-  });
-}
-
-function cargarTema() {
-  const temaGuardado = localStorage.getItem(THEME_KEY);
-
-  if (temaGuardado === "dark") {
-    document.body.classList.add("dark-mode");
-    btnTheme.textContent = "Modo Claro";
-  }
-}
-
-function renderApp() {
-  renderProductos();
-  actualizarEstadisticas();
-
-  if (productoSeleccionadoId) {
-    const existe = inventario.find((p) => p.id === productoSeleccionadoId);
-    if (existe && modal.classList.contains("modal-visible")) {
-      mostrarDetalle(productoSeleccionadoId);
+const ejecutarCompra = (id) => {
+    const p = inventario.find(prod => prod.id === id);
+    if (p && p.stock > 0) {
+        p.stock--;
+        guardarLocal();
+        actualizarIU();
     }
-  }
-}
+};
 
-cargarTema();
-configurarEventos();
-renderApp();
+const abrirDetalle = (p, el) => {
+    document.querySelectorAll('.product-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+
+    document.getElementById('detalle-imagen').src = p.imagen;
+    document.getElementById('detalle-nombre').textContent = p.nombre;
+    document.getElementById('detalle-categoria').textContent = p.categoria;
+    document.getElementById('detalle-precio').textContent = `S/ ${p.precio.toFixed(2)}`;
+    document.getElementById('detalle-stock').textContent = p.stock;
+    
+    modalBS.show();
+};
+
+const refrescarStats = () => {
+    const total = inventario.length;
+    const valor = inventario.reduce((acc, p) => acc + (p.precio * p.stock), 0);
+    document.getElementById('stat-total-items').textContent = total;
+    document.getElementById('stat-valor-total').textContent = `S/ ${valor.toLocaleString('es-PE', {minimumFractionDigits: 2})}`;
+};
+
+const guardarLocal = () => localStorage.setItem('ecoShop_v3', JSON.stringify(inventario));
+
+// --- EVENTOS ---
+
+inputBusqueda.addEventListener('input', actualizarIU);
+
+btnFiltros.forEach(btn => {
+    btn.addEventListener('click', () => {
+        btnFiltros.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        categoriaActual = btn.dataset.categoria;
+        actualizarIU();
+    });
+});
+
+document.getElementById('btn-theme-toggle').addEventListener('click', () => {
+    const html = document.documentElement;
+    const currentTheme = html.getAttribute('data-bs-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    
+    html.setAttribute('data-bs-theme', newTheme);
+    const btn = document.getElementById('btn-theme-toggle');
+    btn.querySelector('span').textContent = newTheme === 'light' ? 'Modo Oscuro' : 'Modo Claro';
+    btn.querySelector('i').className = newTheme === 'light' ? 'bi bi-moon-stars-fill' : 'bi bi-sun-fill text-warning';
+});
+
+// Inicializar
+actualizarIU();

@@ -1,134 +1,127 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoShop - Dashboard de Gestión de Productos</title>
-    
-    <!-- Enlace al archivo de estilos (Para tu compañero UX/UI) -->
+    <title>EcoShop Premium | Dashboard de Gestión</title>
+    <!-- Bootstrap 5.3 + Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css">
-    
-    <!-- FontAwesome para darle iconos bonitos a la interfaz (Opcional pero recomendado) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="light-mode"> <!-- Clase base para que UX/UI controle el tema claro/oscuro -->
+<body>
 
-    <!-- ================= CABECERA ================= -->
-    <header class="app-header">
-        <div class="logo-container">
-            <i class="fa-solid fa-leaf logo-icon"></i>
-            <h1 class="logo-text">EcoShop Dashboard</h1>
-        </div>
-        
-        <!-- ID para JS (escuchar clic) y Clase para CSS (estilos) -->
-        <button id="btn-theme-toggle" class="btn-theme" aria-label="Cambiar a Modo Oscuro">
-            <i class="fa-solid fa-moon"></i> Modo Oscuro
-        </button>
-    </header>
-
-    <!-- ================= CONTENEDOR PRINCIPAL ================= -->
-    <main class="dashboard-container">
-
-        <!-- PANEL LATERAL (CONTROLES Y ESTADÍSTICAS) -->
-        <aside class="sidebar">
-            
-            <!-- Sección 1: Buscador -->
-            <section class="search-section">
-                <h2 class="section-title"><i class="fa-solid fa-magnifying-glass"></i> Buscar</h2>
-                <!-- ID para que JS capture el texto en vivo mientras el usuario escribe -->
-                <input type="text" id="input-busqueda" class="search-input" placeholder="Ej. Lámpara, Mochila...">
-            </section>
-
-            <!-- Sección 2: Filtros de Categorías -->
-            <section class="filters-section">
-                <h2 class="section-title"><i class="fa-solid fa-filter"></i> Categorías</h2>
-                
-                <!-- ID 'contenedor-filtros' para que el de JS capture los clics fácilmente -->
-                <div id="contenedor-filtros" class="filter-buttons">
-                    <!-- El atributo 'data-categoria' es vital para filtrar el arreglo en JS -->
-                    <button class="btn-filtro active" data-categoria="todas">Todas</button>
-                    <button class="btn-filtro" data-categoria="hogar">Hogar</button>
-                    <button class="btn-filtro" data-categoria="tecnología">Tecnología</button>
-                    <button class="btn-filtro" data-categoria="deportes">Deportes</button>
-                </div>
-            </section>
-
-            <!-- Sección 3: Panel de Estadísticas -->
-            <section class="stats-section">
-                <h2 class="section-title"><i class="fa-solid fa-chart-pie"></i> Estadísticas</h2>
-                
-                <div class="stat-card">
-                    <p class="stat-label">Total Productos:</p>
-                    <!-- ID para que JS inserte la longitud del arreglo -->
-                    <strong id="stat-total-items" class="stat-value">0</strong>
-                </div>
-                
-                <div class="stat-card">
-                    <p class="stat-label">Valor del Inventario:</p>
-                    <!-- ID para que JS inserte la suma total del dinero -->
-                    <strong id="stat-valor-total" class="stat-value">$0.00</strong>
-                </div>
-            </section>
-
-        </aside>
-
-        <!-- ÁREA CENTRAL (CATÁLOGO DE PRODUCTOS) -->
-        <section class="catalog-section">
-            <!-- ID principal donde el desarrollador JS inyectará las tarjetas generadas -->
-            <div id="grilla-productos" class="grid-layout">
-                <!-- Las tarjetas se insertarán aquí dinámicamente -->
-            </div>
-        </section>
-
-    </main>
-
-    <!-- ================= MODAL / PANEL DE DETALLE (EFECTO ZOOM) ================= -->
-    <!-- Este panel inicia con clase 'hidden' para estar oculto -->
-    <div id="panel-detalle" class="modal-overlay hidden">
-        <div class="modal-content">
-            
-            <button id="btn-cerrar-modal" class="btn-close" aria-label="Cerrar modal">
-                <i class="fa-solid fa-xmark"></i>
+    <nav class="navbar sticky-top border-bottom custom-nav">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand fw-extrabold text-success d-flex align-items-center" href="#">
+                <i class="bi bi-leaf-fill me-2 fs-3"></i> ECOSHOP
+            </a>
+            <button id="btn-theme-toggle" class="btn btn-theme-switch shadow-sm">
+                <i class="bi bi-moon-stars-fill"></i>
+                <span class="ms-2 d-none d-sm-inline">Modo Oscuro</span>
             </button>
-            
-            <div class="modal-body">
-                <div class="modal-image-container">
-                    <img id="detalle-imagen" src="" alt="Imagen del producto" class="modal-img">
+        </div>
+    </nav>
+
+    <div class="container-fluid py-5 px-lg-5">
+        <div class="row g-4">
+            <!-- Panel Lateral -->
+            <aside class="col-12 col-lg-3">
+                <div class="sticky-sidebar">
+                    <!-- Buscador -->
+                    <div class="glass-card mb-4">
+                        <h6 class="fw-bold mb-3"><i class="bi bi-search me-2 text-success"></i>Buscador</h6>
+                        <div class="input-group">
+                            <input type="text" id="input-busqueda" class="form-control bg-transparent border-2 rounded-pill" placeholder="Buscar producto...">
+                        </div>
+                    </div>
+
+                    <!-- Filtros -->
+                    <div class="glass-card mb-4 text-center">
+                        <h6 class="fw-bold mb-3 text-start"><i class="bi bi-funnel me-2 text-success"></i>Categorías</h6>
+                        <div class="d-flex flex-wrap gap-2 justify-content-start" id="contenedor-filtros">
+                            <button class="btn btn-filter active" data-categoria="todas">Todas</button>
+                            <button class="btn btn-filter" data-categoria="hogar">Hogar</button>
+                            <button class="btn btn-filter" data-categoria="tecnología">Tecnología</button>
+                            <button class="btn btn-filter" data-categoria="deportes">Deportes</button>
+                        </div>
+                    </div>
+
+                    <!-- Estadísticas -->
+                    <div class="stats-card bg-success text-white shadow-lg">
+                        <div class="card-body p-4">
+                            <h6 class="fw-bold mb-4 border-bottom border-white border-opacity-25 pb-2">RESUMEN DE STOCK</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="small opacity-75 text-uppercase fw-semibold">Productos</span>
+                                <span id="stat-total-items" class="fs-4 fw-bold">0</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="small opacity-75 text-uppercase fw-semibold">Valor Total</span>
+                                <span id="stat-valor-total" class="fs-4 fw-bold">S/ 0.00</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="modal-info">
-                    <h2 id="detalle-nombre" class="modal-title">Título</h2>
-                    <span id="detalle-categoria" class="badge badge-modal">Categoría</span>
-                    <p id="detalle-precio" class="modal-price">$0.00</p>
-                    <p id="detalle-stock-texto" class="modal-stock">Stock disponible: <strong id="detalle-stock">0</strong></p>
+            </aside>
+
+            <!-- Catálogo Principal -->
+            <main class="col-12 col-lg-9">
+                <div id="grilla-productos" class="row row-cols-1 row-cols-sm-2 row-cols-xl-3 g-4">
+                    <!-- Cargando dinámicamente -->
                 </div>
-            </div>
-            
+            </main>
         </div>
     </div>
 
-    <!-- ================= PLANTILLA DE TARJETA (GUÍA PARA JS Y CSS) ================= -->
-    <!-- La etiqueta template es invisible. El Lead Dev la usará para clonar la estructura en JS -->
+    <!-- Modal Zoom Detalle -->
+    <div class="modal fade" id="panel-detalle" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content overflow-hidden border-0 shadow-2xl">
+                <div class="modal-body p-0">
+                    <div class="row g-0">
+                        <div class="col-md-6">
+                            <img id="detalle-imagen" src="" class="img-fluid h-100 w-100 object-fit-cover shadow" alt="Detalle">
+                        </div>
+                        <div class="col-md-6 p-5 d-flex flex-column justify-content-center bg-modal-info">
+                            <button type="button" class="btn-close mb-3" data-bs-dismiss="modal"></button>
+                            <span id="detalle-categoria" class="badge bg-success-subtle text-success rounded-pill px-3 py-2 mb-2 w-fit">Cat</span>
+                            <h2 id="detalle-nombre" class="fw-bold mb-3 heading-color">Nombre</h2>
+                            <h3 id="detalle-precio" class="text-success fw-extrabold mb-4 fs-1">S/ 0.00</h3>
+                            <p class="text-secondary-emphasis mb-4">Stock disponible: <span id="detalle-stock" class="fw-bold text-success">0</span> unidades.</p>
+                            <p class="small text-muted border-top pt-3">Producto verificado bajo estándares Eco-Friendly 2026. Entrega inmediata en Huancayo y alrededores.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <template id="template-tarjeta">
-        <article class="product-card">
-            <div class="card-image-wrapper">
-                <img src="" alt="" class="product-img">
-                <span class="badge product-category">Categoría</span>
-            </div>
-            <div class="product-info">
-                <h3 class="product-title">Nombre</h3>
-                <p class="product-price">$0.00</p>
-                <p class="product-stock-text">Stock: <span class="product-stock">0</span></p>
-                
-                <!-- El atributo 'data-id' servirá para que JS sepa a qué producto restar stock -->
-                <button class="btn-comprar" data-id="">
-                    <i class="fa-solid fa-cart-shopping"></i> Comprar
-                </button>
-            </div>
-        </article>
+        <div class="col">
+            <article class="card h-100 product-card shadow-sm border-0">
+                <div class="card-img-wrapper position-relative">
+                    <img src="" class="card-img-top product-img" alt="Producto">
+                    <span class="badge category-badge">Cat</span>
+                    <div class="out-of-stock-mask hidden">
+                        <span class="badge bg-danger rounded-pill px-4 py-2 fs-6 fw-bold">SIN STOCK</span>
+                    </div>
+                </div>
+                <div class="card-body d-flex flex-column p-4">
+                    <h5 class="card-title fw-bold mb-1 product-title text-truncate">Nombre</h5>
+                    <p class="text-success fw-extrabold fs-4 mb-3 product-price">S/ 0.00</p>
+                    <div class="d-flex justify-content-between align-items-center mt-auto border-top pt-3">
+                        <span class="small text-muted fw-semibold">Stock: <span class="product-stock text-success">0</span></span>
+                        <button class="btn btn-buy rounded-pill px-4 fw-bold btn-comprar" data-id="">
+                            <i class="bi bi-cart-plus-fill me-2"></i>Comprar
+                        </button>
+                    </div>
+                </div>
+            </article>
+        </div>
     </template>
 
-    <!-- Enlace al archivo de lógica (Para tu compañero Lead) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
